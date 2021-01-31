@@ -20,7 +20,8 @@ const ASPECT_RATIO: f64 = 16.0 / 9.0;
 const WIDTH: usize = 1200;
 const HEIGHT: usize = (WIDTH as f64 / ASPECT_RATIO) as usize;
 
-const VFOV_RADIANS: f64 = PI / 4.0;
+const VFOV_RADIANS: f64 = PI / 6.0;
+const APERTURE: f64 = 0.1;
 
 const FHEIGHT: f64 = HEIGHT as f64;
 const FWIDTH: f64 = WIDTH as f64;
@@ -93,7 +94,7 @@ fn main() -> Result<()> {
         Vec3::new(0., 1., 0.),
         VFOV_RADIANS,
         ASPECT_RATIO,
-        2.0,
+        APERTURE,
     );
 
     for y in 0..HEIGHT {

@@ -64,16 +64,15 @@ impl Hittable for Sphere {
         let sqrtd = discriminant.sqrt();
 
         // find the root that is within t_min..t_max
-        let mut root;
-        root = -half_b - sqrtd;
-        if root < t_min || t_max < root {
-            root = -half_b + sqrtd;
-            if root < t_min || t_max < root {
+        let mut t;
+        t = (-half_b - sqrtd) / a;
+        if t < t_min || t_max < t {
+            t = -half_b + sqrtd;
+            if t < t_min || t_max < t {
                 return None;
             }
         }
 
-        let t = root / a;
         let p = r.at(t);
         let outward_normal = (p - self.center) / self.radius;
 
