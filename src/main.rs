@@ -1,5 +1,6 @@
 use anyhow::Result;
 use geefr_ppm::Ppm;
+use std::f64::consts::PI;
 use std::rc::Rc;
 
 mod camera;
@@ -16,17 +17,15 @@ pub use crate::util::*;
 
 const ASPECT_RATIO: f64 = 16.0 / 9.0;
 
-const WIDTH: usize = 1000;
+const WIDTH: usize = 1200;
 const HEIGHT: usize = (WIDTH as f64 / ASPECT_RATIO) as usize;
 
-const VIEWPORT_HEIGHT: f64 = 2.0;
-const VIEWPORT_WIDTH: f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
-const FOCAL_LENGTH: f64 = 1.0;
+const VFOV_RADIANS: f64 = PI / 4.0;
 
 const FHEIGHT: f64 = HEIGHT as f64;
 const FWIDTH: f64 = WIDTH as f64;
 
-const SAMPLES_PER_PIXEL: usize = 30;
+const SAMPLES_PER_PIXEL: usize = 10;
 const MAX_RECURSION: usize = 10;
 
 // --- Ray tracer
@@ -73,11 +72,6 @@ fn main() -> Result<()> {
         material: Rc::new(Refractive { ir: 1.5 }),
     }));
     hittables.add(Box::new(Sphere {
-        center: Point3::new(-1., 0., -1.0),
-        radius: -0.45,
-        material: Rc::new(Refractive { ir: 1.5 }),
-    }));
-    hittables.add(Box::new(Sphere {
         center: Point3::new(1., 0., -1.0),
         radius: 0.5,
         material: Rc::new(MetallicFinish {
@@ -94,10 +88,12 @@ fn main() -> Result<()> {
     }));
 
     let camera = Camera::new(
-        Point3::new(0., 0., 0.),
-        VIEWPORT_WIDTH,
-        VIEWPORT_HEIGHT,
-        FOCAL_LENGTH,
+        Point3::new(3., 3., 2.),
+        Point3::new(0., 0., -1.),
+        Vec3::new(0., 1., 0.),
+        VFOV_RADIANS,
+        ASPECT_RATIO,
+        2.0,
     );
 
     for y in 0..HEIGHT {
