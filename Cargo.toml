@@ -1,0 +1,10 @@
+[package]
+name = "raytracer"
+version = "0.1.0"
+authors = ["Dustin J. Mitchell <dustin@mozilla.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0.38"
+geefr-ppm = "0.2.0"
+
