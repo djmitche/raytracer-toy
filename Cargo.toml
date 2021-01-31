@@ -7,4 +7,5 @@ edition = "2018"
 [dependencies]
 anyhow = "1.0.38"
 geefr-ppm = "0.2.0"
+nalgebra = "0.24.1"
 
