@@ -44,6 +44,10 @@ pub fn near_zero(v: Vec3) -> bool {
     v.x < 1e-8 && v.y < 1e-8 && v.z < 1e-8
 }
 
+pub fn component_mult(v1: Vec3, v2: Vec3) -> Vec3 {
+    Vec3::new(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z)
+}
+
 /// Reflect v around the plane to which N is normal.  N and
 /// v must be in different directions.
 pub fn reflect(v: Vec3, normal: Vec3) -> Vec3 {
@@ -96,4 +100,14 @@ pub fn random_in_unit_disc() -> Point3 {
             return p;
         }
     }
+}
+
+pub fn random_color() -> Color {
+    Color::new(uniform(), uniform(), uniform())
+}
+
+pub fn random_color_range(min: f64, max: f64) -> Color {
+    let uni = Uniform::new(min, max);
+    let mut rng = thread_rng();
+    Color::new(rng.sample(uni), rng.sample(uni), rng.sample(uni))
 }
